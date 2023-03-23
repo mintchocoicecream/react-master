@@ -11,7 +11,7 @@ function Header(){
             <li>
               <Link to={"/"}>HOME</Link>
             </li>
-            <li>
+            <li> 
               <button onClick={onAboutClick}>ABOUT</button>
             </li>
         </ul>
