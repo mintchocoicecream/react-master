@@ -1,7 +1,7 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { fetchCoins } from "../api";
 
 const Container=styled.div`
     padding: 0 20px;
@@ -52,7 +52,7 @@ const Img=styled.img`
     margin-right: 10px;
 `;
 
-interface CoinInterface{
+interface ICoin{
     id: string,
     name: string,
     symbol: string,
@@ -63,62 +63,35 @@ interface CoinInterface{
 }
 
 function Coins(){
-    const [coins, setCoins]=useState<CoinInterface[]>([]);
-    const [loading, setLoading]=useState(true);
-    const getCoins=async()=>{
-        const resp=await axios("https://api.coinpaprika.com/v1/coins");
-        const coinData=[
-            {
-                id: "btc-bitcoin",
-                name: "Bitcoin",
-                symbol: "BTC",
-                rank: 1,
-                is_new: false,
-                is_active: true,
-                type: "coin",
-                },
-                {
-                id: "eth-ethereum",
-                name: "Ethereum",
-                symbol: "ETH",
-                rank: 2,
-                is_new: false,
-                is_active: true,
-                type: "coin",
-                },
-                {
-                id: "hex-hex",
-                name: "HEX",
-                symbol: "HEX",
-                rank: 3,
-                is_new: false,
-                is_active: true,
-                type: "token",
-                },
-            ];
-        // setCoins(coinData);
-        setCoins(resp.data.slice(0,100));
-        setLoading(false);
-    }
-    useEffect(()=>{
-        getCoins();
-        // (async()=>{
-        //     const response=await fetch("https://api.coinpaprika.com/v1/coins");
-        //     const json=await response.json();
-        //     setCoins(json.slice(0,100));
-        //     setLoading(false);
-        // })();
-    }, []);
+    //fetcher함수가 isLoading이라면 react query가 알려줌, 또한 fetcher 함수가 끝나면 react query가 알려줌.
+    //fetch함수가 끝나면 react query는 그 함수의 데이터를 data에 넣어줌다.
+    const {isLoading, data}=useQuery<ICoin[]>(["allCoins"], fetchCoins);
+    // const [coins, setCoins]=useState<CoinInterface[]>([]);
+    // const [loading, setLoading]=useState(true);
+    // const getCoins=async()=>{
+    //     const resp=await axios("https://api.coinpaprika.com/v1/coins");
+    //     setCoins(resp.data.slice(0,100));
+    //     setLoading(false);
+    // }
+    // useEffect(()=>{
+    //     getCoins();
+    //     // (async()=>{
+    //     //     const response=await fetch("https://api.coinpaprika.com/v1/coins");
+    //     //     const json=await response.json();
+    //     //     setCoins(json.slice(0,100));
+    //     //     setLoading(false);
+    //     // })();
+    // }, []);
     return (
     <Container>
         <Header>
             <Title>Coin</Title>
         </Header>
-        {loading? (
+        {isLoading? (
             <Loader>Loading...</Loader>
             ):(
             <CoinList>
-                {coins.map((coin)=>(
+                {data?.slice(0,100).map((coin)=>(
                 <Coin key={coin.id}>
                     <Link to={`${coin.id}`} state={`${coin.name}`}>
                         <Img src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`} />
