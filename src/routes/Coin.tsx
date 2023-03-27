@@ -1,4 +1,5 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 
@@ -37,7 +38,22 @@ function Coin(){
     const [loading, setLoading]=useState(true);
     const {coinId}=useParams();
     const {state}=useLocation() as RouterState;
-    console.log(state);
+    const [info, setInfo]=useState({});
+    const [priceInfo, setPriceInfo]=useState({});
+    useEffect(()=>{
+        (async()=>{
+            const infoData=await axios(`https://api.coinpaprika.com/v1/coins/${coinId}`);
+            const priceData=await axios({
+                method: 'get',
+                url: `https://api.coinpaprika.com/v1/coins/${coinId}`,
+            })
+                .then(function(response){
+                    return response;
+                });
+            setInfo(infoData);
+            setPriceInfo(priceData);
+        })();
+    },[]);
     return (
     <Container>
         <Header>
