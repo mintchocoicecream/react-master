@@ -1,4 +1,5 @@
-import { createGlobalStyle } from "styled-components";
+import { useState } from "react";
+import styled, { createGlobalStyle, keyframes } from "styled-components";
 import Router from "./Router";
 
 const GlobalStyle = createGlobalStyle`
@@ -64,9 +65,144 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+let Menu=styled.div`
+  z-index: 99;
+  position: fixed;
+  width: 20%;
+  height: 100vh;
+  background-color: ${(props)=>props.theme.pontColor};
+`;
+
+const MenuUl=styled.ul`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const MenuLi=styled.li`
+  width: 100%;
+  font-size: 1.2em;
+  padding: 40px 0;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: color .2s ease-in;
+  &:hover{
+    color: black;
+  }
+`;
+
+const Logout=styled.button`
+  position: absolute;
+  width: 100%;
+  padding: 10px;
+  background-color: ${(props)=>props.theme.pontColor};
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  bottom: 0;
+  transition: color .2s ease-in;
+  &:hover{
+    color: black;
+  }
+`;
+
 function App() {
+  const [hide, setHide]=useState(false);
+  let MenuClosed=styled.span``;
+  const showMenu=keyframes`
+  from{transform: translateX(-100%);}
+  to{}
+  `;
+
+  const hideMenu=keyframes`
+  from{}
+  to{transform: translateX(-100%);}
+  `;
+
+  const showMenuBtn=keyframes`
+    from{}
+    to{
+      opacity:1;
+    };
+  `;
+
+  if(hide){
+    MenuClosed=styled.span`
+    position: absolute;
+    right: -25px;
+    background-color: ${(props)=>props.theme.pontColor};
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    transition: color .2s ease-in;
+    opacity: 0;
+    animation: ${showMenuBtn} .3s ease-in-out forwards;
+    animation-delay: .3s;
+    &:hover{
+      color: black;
+    }
+    `;
+  }else{
+    MenuClosed=styled.span`
+    position: absolute;
+    right: 0px;
+    background-color: ${(props)=>props.theme.pontColor};
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    transition: color .2s ease-in;
+    &:hover{
+      color: black;
+    }
+    `;
+  }
+
+
+
+  const menuHide=()=>{
+    if(hide){
+      Menu=styled.div`
+      z-index: 99;
+      position: fixed;
+      width: 20%;
+      height: 100vh;
+      transition: all 1s ease-in-out;
+      background-color: ${(props)=>props.theme.pontColor};
+      animation: ${showMenu} .3s ease-in-out forwards;
+
+    `;
+    }  else{
+      Menu=styled.div`
+      z-index: 99;
+      position: fixed;
+      width: 20%;
+      height: 100vh;
+      background-color: ${(props)=>props.theme.pontColor};
+      animation: ${hideMenu} .3s ease-in-out forwards;
+    `;
+    }
+    setHide(!hide);
+  };
   return <>
     <GlobalStyle/>
+    <Menu>
+      {hide?(
+      <MenuClosed onClick={menuHide}>▶</MenuClosed>
+      ):(
+      <MenuClosed onClick={menuHide}>◀</MenuClosed>
+      )}
+      <MenuUl>
+        <MenuLi>test</MenuLi>
+        <MenuLi>test</MenuLi>
+        <MenuLi>test</MenuLi>
+        <MenuLi>test</MenuLi>
+        <Logout>Logout</Logout>
+      </MenuUl>
+    </Menu>
     <Router />  
   </>
 }
