@@ -1,4 +1,5 @@
 import { useState } from "react";
+import {ReactQueryDevtools} from 'react-query/devtools';
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import Router from "./Router";
 
@@ -204,6 +205,7 @@ function App() {
       </MenuUl>
     </Menu>
     <Router />  
+    <ReactQueryDevtools initialIsOpen={true} />
   </>
 }
 

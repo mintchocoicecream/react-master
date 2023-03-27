@@ -63,29 +63,11 @@ interface ICoin{
 }
 
 function Coins(){
-    //fetcher함수가 isLoading이라면 react query가 알려줌, 또한 fetcher 함수가 끝나면 react query가 알려줌.
-    //fetch함수가 끝나면 react query는 그 함수의 데이터를 data에 넣어줌다.
     const {isLoading, data}=useQuery<ICoin[]>(["allCoins"], fetchCoins);
-    // const [coins, setCoins]=useState<CoinInterface[]>([]);
-    // const [loading, setLoading]=useState(true);
-    // const getCoins=async()=>{
-    //     const resp=await axios("https://api.coinpaprika.com/v1/coins");
-    //     setCoins(resp.data.slice(0,100));
-    //     setLoading(false);
-    // }
-    // useEffect(()=>{
-    //     getCoins();
-    //     // (async()=>{
-    //     //     const response=await fetch("https://api.coinpaprika.com/v1/coins");
-    //     //     const json=await response.json();
-    //     //     setCoins(json.slice(0,100));
-    //     //     setLoading(false);
-    //     // })();
-    // }, []);
     return (
     <Container>
         <Header>
-            <Title>Coin</Title>
+            <Title>List</Title>
         </Header>
         {isLoading? (
             <Loader>Loading...</Loader>
