@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {ReactQueryDevtools} from 'react-query/devtools';
+import { Link } from "react-router-dom";
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import Router from "./Router";
 
@@ -197,7 +198,9 @@ function App() {
       <MenuClosed onClick={menuHide}>◀</MenuClosed>
       )}
       <MenuUl>
-        <MenuLi>test</MenuLi>
+        <MenuLi>
+          <a href="/">Home</a>
+        </MenuLi>
         <MenuLi>test</MenuLi>
         <MenuLi>test</MenuLi>
         <MenuLi>test</MenuLi>

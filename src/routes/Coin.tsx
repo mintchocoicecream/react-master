@@ -1,6 +1,4 @@
 import { useQuery } from "react-query";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import { Link, Outlet, useLocation, useMatch, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
@@ -158,27 +156,6 @@ function Coin(){
 
     const {isLoading:infoLosding, data:infoData}=useQuery<InfoData>(["info", coinId], ()=>fetchCoinInfo(coinId));
     const {isLoading:tickersLoading, data:tickersData}=useQuery<PriceData>(["tickers", coinId], ()=>fetchCoinTickers(coinId));
-    
-    // const [info, setInfo]=useState<InfoData>();
-    // const [priceInfo, setPriceInfo]=useState<PriceData>();
-
-    // useEffect(()=>{
-    //     (async()=>{
-    //         const infoData=await axios(`https://api.coinpaprika.com/v1/coins/${coinId}`);
-    //         const priceData=await axios({
-    //             method: 'get',
-    //             url: `https://api.coinpaprika.com/v1/tickers/${coinId}`,
-    //         })
-    //             .then(function(response){
-    //                 return response.data;
-    //             });
-    //         // console.log(infoData.data);
-    //         // console.log(priceData);
-    //         setInfo(infoData.data);
-    //         setPriceInfo(priceData);
-    //         setLoading(false);
-    //     })();
-    // },[coinId]);
 
     const loading=infoLosding || tickersLoading;
     return (
@@ -221,7 +198,7 @@ function Coin(){
                 <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Outlet/>
+          <Outlet context={{coinId}}/>
         </>
         )}
     </Container>
