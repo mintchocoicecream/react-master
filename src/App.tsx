@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { HelmetProvider } from "react-helmet-async";
 import {ReactQueryDevtools} from 'react-query/devtools';
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styled, { createGlobalStyle, keyframes } from "styled-components";
 import Router from "./Router";
 
@@ -207,7 +208,9 @@ function App() {
         <Logout>Logout</Logout>
       </MenuUl>
     </Menu>
-    <Router />  
+    <HelmetProvider>
+      <Router />  
+    </HelmetProvider>
     <ReactQueryDevtools initialIsOpen={true} />
   </>
 }
