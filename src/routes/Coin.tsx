@@ -147,9 +147,9 @@ interface PriceData{
     };
 };
 
-interface ICoinProps{};
+// interface ICoinProps{};
 
-function Coin({}:ICoinProps){
+function Coin(){
     const {coinId}=useParams() as IParams;
     // const [loading, setLoading]=useState(true);
     const {state}=useLocation() as RouterState;
