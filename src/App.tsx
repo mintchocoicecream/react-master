@@ -211,9 +211,8 @@ function App() {
         <Logout>Logout</Logout>
       </MenuUl>
     </Menu>
-    <button onClick={toggleDark}>Toggle Mode</button>
     <HelmetProvider>
-      <Router />  
+      <Router isDark={isDark} toggleDark={toggleDark}/>  
     </HelmetProvider>
     <ReactQueryDevtools initialIsOpen={true} />
   </ThemeProvider>
