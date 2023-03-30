@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { HelmetProvider } from "react-helmet-async";
 import {ReactQueryDevtools} from 'react-query/devtools';
-import { Link, NavLink } from "react-router-dom";
-import styled, { createGlobalStyle, keyframes } from "styled-components";
+import styled, { createGlobalStyle, keyframes, ThemeProvider } from "styled-components";
 import Router from "./Router";
+import { darkThem, lightTheme } from "./theme";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -115,7 +115,11 @@ const Logout=styled.button`
 
 function App() {
   const [hide, setHide]=useState(false);
+  const [isDark, setIsDark]=useState(false);
+  const toggleDark=()=>setIsDark((current)=>!current);
+
   let MenuClosed=styled.span``;
+  
   const showMenu=keyframes`
   from{transform: translateX(-100%);}
   to{}
@@ -164,8 +168,6 @@ function App() {
     `;
   }
 
-
-
   const menuHide=()=>{
     if(hide){
       Menu=styled.div`
@@ -176,7 +178,6 @@ function App() {
       transition: all 1s ease-in-out;
       background-color: ${(props)=>props.theme.pontColor};
       animation: ${showMenu} .3s ease-in-out forwards;
-
     `;
     }  else{
       Menu=styled.div`
@@ -190,7 +191,9 @@ function App() {
     }
     setHide(!hide);
   };
+
   return <>
+  <ThemeProvider theme={isDark? darkThem:lightTheme}>
     <GlobalStyle/>
     <Menu>
       {hide?(
@@ -208,10 +211,12 @@ function App() {
         <Logout>Logout</Logout>
       </MenuUl>
     </Menu>
+    <button onClick={toggleDark}>Toggle Mode</button>
     <HelmetProvider>
       <Router />  
     </HelmetProvider>
     <ReactQueryDevtools initialIsOpen={true} />
+  </ThemeProvider>
   </>
 }
 
