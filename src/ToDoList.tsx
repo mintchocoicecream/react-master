@@ -1,27 +1,35 @@
 import {useForm} from "react-hook-form";
 
 interface IFormData {
-    errors: {
-        email: {
-            message: string;
-        };
-    };
+    // errors: {
+    //     email: {
+    //         message: string;
+    //     };
+
+    // };
     email: string;
     name: string;
     password: string;
     password1: string;
+    extraError?:string;
 }
 
 export default function ToDoList() {
-    const {register, handleSubmit, formState:{errors}}=useForm<IFormData>({
+    const {register, handleSubmit, formState:{errors}, setError}=useForm<IFormData>({
         defaultValues: {
             email: "@naver.com",
         }
     });
+
     // react-hook-form이 모든 validation을 다 마쳤을 때만 호출될 것
-    const onValid=(data:any)=>{
-        console.log(data)
+    const onValid=(data:IFormData)=>{
+        if(data.password !== data.password1){
+            return setError("password1", {message: "Password are not the same!"});
+        };
+        //전체 form에 해당되는 에러
+        // setError("extraError", {message:"server offline..."});
     };
+
     // console.log(errors?.email?.message);
     return(
         <div>
@@ -38,7 +46,7 @@ export default function ToDoList() {
                 <span style={{ color: errors?.email?.message ? "red" : "" }}>{errors?.email?.message}</span>
                 <input {...register("name", {
                     required: "write here", 
-                    minLength:5
+                    validate: (value)=>!value.includes("nico")?true:"error message",
                     },
                     )} 
                     placeholder='name'/>
@@ -54,6 +62,7 @@ export default function ToDoList() {
                     })} placeholder='password check'/>
                 <span style={{ color: errors?.password1?.message ? "red" : "" }}>{errors?.password1?.message}</span>
                 <button>Add</button>
+                <span style={{ backgroundColor: errors?.extraError?.message ? "red" : "" }}>{errors?.extraError?.message}</span>
             </form>
         </div> 
     )
