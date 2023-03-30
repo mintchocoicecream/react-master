@@ -4,18 +4,14 @@ import Coin from "./routes/Coin";
 import Coins from "./routes/Coins";
 import Price from "./routes/Price";
 
-interface IRouterProps{
-  //아무 argument를 받지 않고, void를 return하는 함수 타입
-  toggleDark:  ()=>void;
-  isDark: boolean;
-}
+interface IRouterProps{}
 
-function Router({toggleDark, isDark}:IRouterProps) {
+function Router({}:IRouterProps) {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Coins toggleDark={toggleDark}/>}></Route>
-        <Route path=":coinId" element={<Coin isDark={isDark}/>}>
+        <Route path="/" element={<Coins />}></Route>
+        <Route path=":coinId" element={<Coin />}>
           <Route path="chart" element={<Chart />}/>
           <Route path="price" element={<Price />}/>
         </Route>

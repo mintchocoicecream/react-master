@@ -147,11 +147,9 @@ interface PriceData{
     };
 };
 
-interface ICoinProps{
-    isDark:boolean;
-};
+interface ICoinProps{};
 
-function Coin({isDark}:ICoinProps){
+function Coin({}:ICoinProps){
     const {coinId}=useParams() as IParams;
     // const [loading, setLoading]=useState(true);
     const {state}=useLocation() as RouterState;
@@ -212,7 +210,7 @@ function Coin({isDark}:ICoinProps){
                 <Link to="price">Price</Link>
             </Tab>
           </Tabs>
-          <Outlet context={{coinId, isDark}}/>
+          <Outlet context={{coinId}}/>
         </>
         )}
     </Container>
