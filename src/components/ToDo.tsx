@@ -1,13 +1,13 @@
 import { useSetRecoilState } from 'recoil';
 import { IToDo, toDoState } from '../atoms'
 
-//원소 배열 변경
-const color=["red", "black", "pink", "white"];
-const target=1;
-const front=["red"]; //color.slice(0,1)
-const back=["pink", "white"]; //color.slice(target+1)
-// const finalPart=[...front, "blue", ...back];
-const finalPart=[...color.slice(0, target), "blue", ...color.slice(target+1)];
+//원소 배열 변경 개념
+// const color=["red", "black", "pink", "white"];
+// const target=1;
+// const front=["red"]; //color.slice(0,1)
+// const back=["pink", "white"]; //color.slice(target+1)
+// // const finalPart=[...front, "blue", ...back];
+// const finalPart=[...color.slice(0, target), "blue", ...color.slice(target+1)];
 
 export default function ToDo({text, category, id}:IToDo) {
 const setToDos=useSetRecoilState(toDoState);
