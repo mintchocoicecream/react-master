@@ -1,12 +1,28 @@
 import { useSetRecoilState } from 'recoil';
 import { IToDo, toDoState } from '../atoms'
 
+//원소 배열 변경
+const color=["red", "black", "pink", "white"];
+const target=1;
+const front=["red"]; //color.slice(0,1)
+const back=["pink", "white"]; //color.slice(target+1)
+// const finalPart=[...front, "blue", ...back];
+const finalPart=[...color.slice(0, target), "blue", ...color.slice(target+1)];
+
 export default function ToDo({text, category, id}:IToDo) {
 const setToDos=useSetRecoilState(toDoState);
-//   const onClick=(newCategory:IToDo["category"])=>{console.log(newCategory)};
 const onClick=(event:React.MouseEvent<HTMLButtonElement>)=>{
-   const {currentTarget:{name}}=event;
-};  
+   const {
+    currentTarget:{name},
+    }=event;
+    setToDos((oldToDos)=>{
+        const targetIndex=oldToDos.findIndex((toDo)=>toDo.id===id);
+        // const oldToDo=oldToDos[targetIndex];
+        const newToDo={text, id, category:name as any};
+        // console.log(oldToDo, newToDo);
+        return [...oldToDos.slice(0, targetIndex), newToDo, ...oldToDos.slice(targetIndex+1)];
+    });
+};
 return (
     <li>
         <span>{text}</span>
