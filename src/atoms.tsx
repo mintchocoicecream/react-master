@@ -1,15 +1,24 @@
 import { atom, selector } from "recoil";
 
+// type categories = "TO_DO"|"DOING"|"DONE";
+// enum을 지정하면 이제 직접 "TO_DO"나 "DOING"..을 쓰는 일은 없을 것.
+export enum Categories {
+    "TO_DO"="TO_DO",
+    "DOING"="DOING",
+    "DONE"="DONE",
+};
+
 //todo 인터페이스
 export interface IToDo{
     id: number;
     text: string;
-    category: "TO_DO"|"DOING"|"DONE";
+    category: Categories;
 };
 
-export const categoryState=atom({
+export const categoryState=atom<Categories>({
     key: "category",
-    default: "TO_DO",
+    // default: "TO_DO",
+    default: Categories.TO_DO,
 });
 
 export const toDoState=atom<IToDo[]>({

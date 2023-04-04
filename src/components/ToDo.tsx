@@ -1,5 +1,5 @@
 import { useSetRecoilState } from 'recoil';
-import { IToDo, toDoState } from '../atoms'
+import { Categories, IToDo, toDoState } from '../atoms'
 
 //원소 배열 변경 개념
 // const color=["red", "black", "pink", "white"];
@@ -26,9 +26,9 @@ const onClick=(event:React.MouseEvent<HTMLButtonElement>)=>{
 return (
     <li>
         <span>{text}</span>
-        {category !=="DOING" && <button name="DOING" onClick={onClick}>Doing</button>}
-        {category !=="TO_DO" && <button name="TO_DO" onClick={onClick}>ToDo</button>}
-        {category !=="DONE" && <button name="DONE" onClick={onClick}>Done</button>}
+        {category !==Categories.DOING && <button name={Categories.DOING} onClick={onClick}>Doing</button>}
+        {category !==Categories.TO_DO && <button name={Categories.TO_DO} onClick={onClick}>ToDo</button>}
+        {category !==Categories.DONE && <button name={Categories.DONE} onClick={onClick}>Done</button>}
     </li>
   )
 }
